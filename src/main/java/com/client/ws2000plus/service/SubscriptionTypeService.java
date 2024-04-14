@@ -1,5 +1,6 @@
 package com.client.ws2000plus.service;
 
+import com.client.ws2000plus.dto.SubscriptionTypeDTO;
 import com.client.ws2000plus.model.SubscriptionType;
 
 import java.util.List;
@@ -10,9 +11,9 @@ public interface SubscriptionTypeService {
 
     SubscriptionType findById (Long id);
 
-    SubscriptionType create (SubscriptionType subscriptionType);
+    SubscriptionType create (SubscriptionTypeDTO dto);
 
-    SubscriptionType update (Long id, SubscriptionType subscriptionType);
+    SubscriptionType update (Long id, SubscriptionTypeDTO dto);
 
     void delete (Long id);
 

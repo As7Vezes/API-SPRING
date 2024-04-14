@@ -1,14 +1,13 @@
 package com.client.ws2000plus.controller;
 
+import com.client.ws2000plus.dto.SubscriptionTypeDTO;
+import com.client.ws2000plus.exception.NotFoundException;
 import com.client.ws2000plus.model.SubscriptionType;
 import com.client.ws2000plus.service.SubscriptionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,18 +19,31 @@ public class SubscriptionTypeController {
     @Autowired
     private SubscriptionTypeService subscriptionTypeService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<SubscriptionType>> findAll () {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SubscriptionType> findById (@PathVariable("id") Long id) {
-        SubscriptionType subscriptionType = subscriptionTypeService.findById(id);
-        if(Objects.nonNull(subscriptionType)) {
-            return ResponseEntity.status(HttpStatus.OK).body(subscriptionType);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findById(id));
     }
+
+    @PostMapping
+    public ResponseEntity<SubscriptionType> create (@RequestBody SubscriptionTypeDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionTypeService.create(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SubscriptionType> create (@PathVariable("id") Long id, @RequestBody SubscriptionTypeDTO dto) {
+        return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete (@PathVariable("id") Long id) {
+        subscriptionTypeService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
 
 }
