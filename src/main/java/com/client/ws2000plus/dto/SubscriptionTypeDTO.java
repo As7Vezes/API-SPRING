@@ -1,5 +1,9 @@
 package com.client.ws2000plus.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,12 +19,18 @@ public class SubscriptionTypeDTO {
 
     private Long id;
 
+    @NotBlank(message = "não pode ser nulo ou vazio!")
+    @Size(min = 5, max = 30, message = "deve ter tamanho entre 5 e 15")
     private String name;
 
-    private Long accessMoth;
+    @Max(value = 12, message = "não pode ser maior que 12!")
+    private Long accessMoths;
 
+    @NotNull(message = "não pode ser nulo!")
     private BigDecimal price;
 
+    @NotBlank(message = "não pode ser nulo ou vazio!")
+    @Size(min = 5, max = 15, message = "deve ter tamanho entre 5 e 15")
     private String productKey;
 
 }

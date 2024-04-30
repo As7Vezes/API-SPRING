@@ -1,16 +1,15 @@
 package com.client.ws2000plus.controller;
 
 import com.client.ws2000plus.dto.SubscriptionTypeDTO;
-import com.client.ws2000plus.exception.NotFoundException;
 import com.client.ws2000plus.model.SubscriptionType;
 import com.client.ws2000plus.service.SubscriptionTypeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/subscription_type")
@@ -30,12 +29,12 @@ public class SubscriptionTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<SubscriptionType> create (@RequestBody SubscriptionTypeDTO dto) {
+    public ResponseEntity<SubscriptionType> create (@Valid @RequestBody SubscriptionTypeDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionTypeService.create(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubscriptionType> create (@PathVariable("id") Long id, @RequestBody SubscriptionTypeDTO dto) {
+    public ResponseEntity<SubscriptionType> update (@PathVariable("id") Long id, @RequestBody SubscriptionTypeDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.update(id, dto));
     }
 

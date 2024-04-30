@@ -3,6 +3,7 @@ package com.client.ws2000plus.service.impl;
 import com.client.ws2000plus.dto.SubscriptionTypeDTO;
 import com.client.ws2000plus.exception.BadRequestException;
 import com.client.ws2000plus.exception.NotFoundException;
+import com.client.ws2000plus.mapper.SubscriptionTypeMapper;
 import com.client.ws2000plus.model.SubscriptionType;
 import com.client.ws2000plus.repository.SubscriptionTypeRepository;
 import com.client.ws2000plus.service.SubscriptionTypeService;
@@ -36,26 +37,14 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         if (Objects.nonNull(dto.getId())) {
             throw new BadRequestException("Id deve ser nulo!");
         }
-        return subscriptionTypeRepository.save(SubscriptionType.builder()
-                        .id(dto.getId())
-                        .name(dto.getName())
-                        .accessMoth(dto.getAccessMoth())
-                        .price(dto.getPrice())
-                        .productKey(dto.getProductKey())
-                .build());
+        return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoToEntity(dto));
     }
 
     @Override
     public SubscriptionType update(Long id, SubscriptionTypeDTO dto) {
         getSubscriptionType(id);
-
-        return subscriptionTypeRepository.save(SubscriptionType.builder()
-                .id(id)
-                .name(dto.getName())
-                .accessMoth(dto.getAccessMoth())
-                .price(dto.getPrice())
-                .productKey(dto.getProductKey())
-                .build());
+        dto.setId(id);
+        return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoToEntity(dto));
     }
 
     @Override
